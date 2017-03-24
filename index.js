@@ -29,8 +29,10 @@ var argv = require('minimist')(process.argv.slice(2)),
 async.series(fns, function(err, result) {
 	if(err) {
 		console.log(err);
+	} else {
+		console.log("query executeing is done!");
+		console.log(result);
 	}
-	console.log(result);
 });
 
 
