@@ -11,6 +11,7 @@ var argv = require('minimist')(process.argv.slice(2)),
 	driver = new neo4j.driver(config.url, neo4j.auth.basic(config.user, config.pass)),
 	cqls = fs.readFileSync(`./${config.filename}`, 'utf-8'),
 	fns = cqls.split(';')
+			.spice(0, -1)
 			.map((cql) => (
 				(callback)=>{
 					var session = driver.session();
@@ -24,7 +25,7 @@ var argv = require('minimist')(process.argv.slice(2)),
 							callback(err, cql)
 						});
 				})
-			)
+			);
 
 async.series(fns, function(err, result) {
 	if(err) {
